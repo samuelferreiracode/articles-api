@@ -1,0 +1,30 @@
+# Compiled binary files
+*.exe
+*.o
+*.out
+
+# IDE-specific files and directories
+.vscode/
+.idea/
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.sln.iml
+*.vmd
+*.nsf
+*.swp
+*.swo
+*~
+
+# Dependency directories
+/vendor/
+/go.sum
+/go.mod
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Log and trace files
+*.log
+*.log.*
