@@ -9,6 +9,26 @@ import (
 
 func RegisterRoutes(router *gin.Engine, client *repository.Client) {
 	router.GET("/articles", getPaginatedArticles(client))
+	router.GET("articles/:id", getArticleByID(client))
+}
+
+func getArticleByID(client *repository.Client) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+		number, err := strconv.ParseInt(id, 10, 64)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid article ID"})
+			return
+		}
+
+		article, err := client.GetArticleByID(number)
+		if err != nil {
+			c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Article not found"})
+			return
+		}
+
+		c.IndentedJSON(http.StatusOK, article)
+	}
 }
 
 func getPaginatedArticles(client *repository.Client) gin.HandlerFunc {

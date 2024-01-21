@@ -59,3 +59,16 @@ func (c *Client) GetPaginatedArticles(page, pageSize int64) ([]Article, error) {
 
 	return articles, nil
 }
+
+func (c *Client) GetArticleByID(id int64) (*Article, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	var art Article
+	err := c.DB.Collection("articles").FindOne(ctx, bson.M{"id": id}).Decode(&art)
+	if err != nil {
+		return nil, err
+	}
+
+	return &art, nil
+}
